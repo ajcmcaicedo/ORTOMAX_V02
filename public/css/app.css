@@ -1,0 +1,1309 @@
+/* =========================================================
+   ORTOMAX - ESTILOS GENERALES
+   ========================================================= */
+
+   :root {
+    /* -----------------------------------------------------
+       COLORES PRINCIPALES
+       ----------------------------------------------------- */
+
+    --ortomax-blue: #0D9FEF;
+    --ortomax-blue-dark: #0878B8;
+    --ortomax-blue-light: #EAF7FF;
+
+    /* -----------------------------------------------------
+       COLORES GENERALES
+       ----------------------------------------------------- */
+
+    --ortomax-white: #FFFFFF;
+    --ortomax-gray: #F4F7F9;
+    --ortomax-gray-light: #F8FAFC;
+    --ortomax-gray-dark: #6B7280;
+
+    --ortomax-border: #DDE5EA;
+
+    --ortomax-text: #263238;
+    --ortomax-text-light: #667085;
+
+    /* -----------------------------------------------------
+       ESTADOS
+       ----------------------------------------------------- */
+
+    --ortomax-success: #28A745;
+    --ortomax-danger: #DC3545;
+    --ortomax-warning: #F5A623;
+
+    /* -----------------------------------------------------
+       DIMENSIONES
+       ----------------------------------------------------- */
+
+    --ortomax-sidebar-width: 240px;
+    --ortomax-header-height: 64px;
+
+    /* -----------------------------------------------------
+       SOMBRAS
+       ----------------------------------------------------- */
+
+    --ortomax-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08);
+
+    --ortomax-shadow-hover:
+        0 4px 14px rgba(0, 0, 0, 0.12);
+
+    /* -----------------------------------------------------
+       BORDES
+       ----------------------------------------------------- */
+
+    --ortomax-radius: 6px;
+    --ortomax-radius-large: 10px;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: var(--ortomax-gray);
+
+    color: var(--ortomax-text);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   LAYOUT PRINCIPAL
+   ========================================================= */
+
+.ortomax-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.ortomax-sidebar {
+
+    width: var(--ortomax-sidebar-width);
+
+    min-height: 100vh;
+
+    background: var(--ortomax-blue);
+
+    color: var(--ortomax-white);
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+
+    box-shadow:
+        2px 0 8px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.ortomax-logo {
+
+    background: var(--ortomax-white);
+
+    padding: 18px 15px 14px;
+
+    text-align: center;
+
+    border-bottom:
+        1px solid var(--ortomax-border);
+}
+
+.ortomax-logo img {
+
+    display: block;
+
+    max-width: 185px;
+
+    max-height: 75px;
+
+    width: auto;
+
+    height: auto;
+
+    margin: 0 auto;
+
+    object-fit: contain;
+}
+
+.ortomax-company-name {
+
+    margin-top: 8px;
+
+    color: var(--ortomax-blue-dark);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+.ortomax-menu {
+
+    padding: 10px 0 25px;
+}
+
+
+/* ---------------------------------------------------------
+   TÍTULOS DE SECCIÓN
+   --------------------------------------------------------- */
+
+.ortomax-menu-title {
+
+    padding:
+        15px 20px 7px;
+
+    color:
+        rgba(255, 255, 255, 0.72);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+}
+
+
+/* ---------------------------------------------------------
+   LINKS
+   --------------------------------------------------------- */
+
+.ortomax-menu a {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 42px;
+
+    padding:
+        10px 18px;
+
+    color: var(--ortomax-white);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    border-left:
+        3px solid transparent;
+
+    transition:
+        background 0.2s ease,
+        border 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   HOVER
+   --------------------------------------------------------- */
+
+.ortomax-menu a:hover {
+
+    background:
+        rgba(255, 255, 255, 0.14);
+
+    border-left-color:
+        var(--ortomax-white);
+}
+
+
+/* ---------------------------------------------------------
+   LINK ACTIVO
+   --------------------------------------------------------- */
+
+.ortomax-menu a.active {
+
+    background:
+        var(--ortomax-blue-dark);
+
+    border-left-color:
+        var(--ortomax-white);
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ICONOS DEL MENÚ
+   ========================================================= */
+
+.ortomax-menu-icon {
+
+    width: 25px;
+
+    min-width: 25px;
+
+    margin-right: 7px;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+   ========================================================= */
+
+.ortomax-main {
+
+    margin-left:
+        var(--ortomax-sidebar-width);
+
+    width:
+        calc(100% - var(--ortomax-sidebar-width));
+
+    min-height: 100vh;
+
+    background:
+        var(--ortomax-gray);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.ortomax-header {
+
+    height:
+        var(--ortomax-header-height);
+
+    background:
+        var(--ortomax-white);
+
+    border-bottom:
+        1px solid var(--ortomax-border);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 25px;
+
+    position:
+        sticky;
+
+    top: 0;
+
+    z-index: 900;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================================================
+   TÍTULO DEL HEADER
+   ========================================================= */
+
+.ortomax-header-title {
+
+    color:
+        var(--ortomax-blue-dark);
+
+    font-size:
+        18px;
+
+    font-weight:
+        600;
+}
+
+
+/* =========================================================
+   INFORMACIÓN HEADER
+   ========================================================= */
+
+.ortomax-header-company {
+
+    color:
+        var(--ortomax-gray-dark);
+
+    font-size:
+        13px;
+}
+
+
+/* =========================================================
+   CONTENIDO
+   ========================================================= */
+
+.ortomax-content {
+
+    padding:
+        25px;
+
+    max-width:
+        1600px;
+
+    margin:
+        0 auto;
+}
+
+
+/* =========================================================
+   TARJETAS
+   ========================================================= */
+
+.ortomax-card {
+
+    background:
+        var(--ortomax-white);
+
+    border:
+        1px solid var(--ortomax-border);
+
+    border-radius:
+        var(--ortomax-radius-large);
+
+    padding:
+        25px;
+
+    box-shadow:
+        var(--ortomax-shadow);
+}
+
+
+/* =========================================================
+   CABECERA DE MÓDULO
+   ========================================================= */
+
+.ortomax-module-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        20px;
+}
+
+
+/* =========================================================
+   TÍTULOS
+   ========================================================= */
+
+.ortomax-title {
+
+    margin:
+        0;
+
+    color:
+        var(--ortomax-blue-dark);
+
+    font-size:
+        22px;
+
+    font-weight:
+        600;
+}
+
+.ortomax-subtitle {
+
+    margin-top:
+        5px;
+
+    color:
+        var(--ortomax-gray-dark);
+
+    font-size:
+        13px;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.ortomax-btn {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        6px;
+
+    min-height:
+        38px;
+
+    padding:
+        8px 15px;
+
+    border:
+        1px solid transparent;
+
+    border-radius:
+        var(--ortomax-radius);
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        all 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   PRIMARIO
+   --------------------------------------------------------- */
+
+.ortomax-btn-primary {
+
+    background:
+        var(--ortomax-blue);
+
+    color:
+        var(--ortomax-white);
+}
+
+.ortomax-btn-primary:hover {
+
+    background:
+        var(--ortomax-blue-dark);
+
+    color:
+        var(--ortomax-white);
+
+    box-shadow:
+        var(--ortomax-shadow);
+}
+
+
+/* ---------------------------------------------------------
+   SECUNDARIO
+   --------------------------------------------------------- */
+
+.ortomax-btn-secondary {
+
+    background:
+        var(--ortomax-white);
+
+    color:
+        var(--ortomax-blue-dark);
+
+    border-color:
+        var(--ortomax-border);
+}
+
+.ortomax-btn-secondary:hover {
+
+    background:
+        var(--ortomax-blue-light);
+}
+
+
+/* ---------------------------------------------------------
+   ÉXITO
+   --------------------------------------------------------- */
+
+.ortomax-btn-success {
+
+    background:
+        var(--ortomax-success);
+
+    color:
+        var(--ortomax-white);
+}
+
+
+/* ---------------------------------------------------------
+   PELIGRO
+   --------------------------------------------------------- */
+
+.ortomax-btn-danger {
+
+    background:
+        var(--ortomax-danger);
+
+    color:
+        var(--ortomax-white);
+}
+
+
+/* ---------------------------------------------------------
+   WARNING
+   --------------------------------------------------------- */
+
+.ortomax-btn-warning {
+
+    background:
+        var(--ortomax-warning);
+
+    color:
+        var(--ortomax-white);
+}
+
+
+/* =========================================================
+   TABLAS
+   ========================================================= */
+
+.ortomax-table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid var(--ortomax-border);
+
+    border-radius:
+        var(--ortomax-radius);
+
+    background:
+        var(--ortomax-white);
+}
+
+.ortomax-table {
+
+    width: 100%;
+
+    border-collapse:
+        collapse;
+
+    background:
+        var(--ortomax-white);
+}
+
+
+/* ---------------------------------------------------------
+   ENCABEZADO
+   --------------------------------------------------------- */
+
+.ortomax-table thead th {
+
+    background:
+        var(--ortomax-blue);
+
+    color:
+        var(--ortomax-white);
+
+    padding:
+        12px 14px;
+
+    text-align:
+        left;
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+
+    white-space:
+        nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   CELDAS
+   --------------------------------------------------------- */
+
+.ortomax-table tbody td {
+
+    padding:
+        11px 14px;
+
+    border-bottom:
+        1px solid var(--ortomax-border);
+
+    color:
+        var(--ortomax-text);
+
+    vertical-align:
+        middle;
+}
+
+
+/* ---------------------------------------------------------
+   HOVER FILA
+   --------------------------------------------------------- */
+
+.ortomax-table tbody tr:hover {
+
+    background:
+        var(--ortomax-blue-light);
+}
+
+
+/* ---------------------------------------------------------
+   ÚLTIMA FILA
+   --------------------------------------------------------- */
+
+.ortomax-table tbody tr:last-child td {
+
+    border-bottom:
+        none;
+}
+
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.ortomax-status {
+
+    display:
+        inline-block;
+
+    padding:
+        4px 9px;
+
+    border-radius:
+        20px;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+}
+
+.ortomax-status-active {
+
+    background:
+        #E8F7ED;
+
+    color:
+        #198754;
+}
+
+.ortomax-status-inactive {
+
+    background:
+        #FDECEC;
+
+    color:
+        #C82333;
+}
+
+
+/* =========================================================
+   FORMULARIOS
+   ========================================================= */
+
+.ortomax-form-group {
+
+    margin-bottom:
+        18px;
+}
+
+.ortomax-form-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+
+    color:
+        var(--ortomax-text);
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+}
+
+.ortomax-form-control {
+
+    width:
+        100%;
+
+    min-height:
+        40px;
+
+    padding:
+        8px 11px;
+
+    border:
+        1px solid var(--ortomax-border);
+
+    border-radius:
+        var(--ortomax-radius);
+
+    background:
+        var(--ortomax-white);
+
+    color:
+        var(--ortomax-text);
+
+    font-size:
+        14px;
+
+    outline:
+        none;
+
+    transition:
+        border 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.ortomax-form-control:focus {
+
+    border-color:
+        var(--ortomax-blue);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(13, 159, 239, 0.12);
+}
+
+textarea.ortomax-form-control {
+
+    min-height:
+        100px;
+
+    resize:
+        vertical;
+}
+
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.ortomax-alert {
+
+    padding:
+        12px 15px;
+
+    margin-bottom:
+        20px;
+
+    border-radius:
+        var(--ortomax-radius);
+
+    font-size:
+        13px;
+}
+
+.ortomax-alert-success {
+
+    background:
+        #E8F7ED;
+
+    color:
+        #146C43;
+
+    border:
+        1px solid #B7E4C7;
+}
+
+.ortomax-alert-danger {
+
+    background:
+        #FDECEC;
+
+    color:
+        #B02A37;
+
+    border:
+        1px solid #F5C2C7;
+}
+
+.ortomax-alert-warning {
+
+    background:
+        #FFF4E5;
+
+    color:
+        #997404;
+
+    border:
+        1px solid #FFE69C;
+}
+
+
+/* =========================================================
+   MENSAJE VACÍO
+   ========================================================= */
+
+.ortomax-empty {
+
+    padding:
+        45px 20px;
+
+    text-align:
+        center;
+
+    color:
+        var(--ortomax-gray-dark);
+
+    background:
+        var(--ortomax-white);
+}
+
+
+/* =========================================================
+   ACCIONES DE TABLA
+   ========================================================= */
+
+.ortomax-actions {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    flex-wrap:
+        wrap;
+}
+
+.ortomax-action {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-width:
+        32px;
+
+    height:
+        32px;
+
+    padding:
+        0 8px;
+
+    border-radius:
+        4px;
+
+    text-decoration:
+        none;
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+}
+
+.ortomax-action-view {
+
+    background:
+        var(--ortomax-blue-light);
+
+    color:
+        var(--ortomax-blue-dark);
+}
+
+.ortomax-action-edit {
+
+    background:
+        #FFF4E5;
+
+    color:
+        #996C00;
+}
+
+.ortomax-action-delete {
+
+    background:
+        #FDECEC;
+
+    color:
+        var(--ortomax-danger);
+}
+
+
+/* =========================================================
+   PAGINACIÓN
+   ========================================================= */
+
+.ortomax-pagination {
+
+    margin-top:
+        20px;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    :root {
+        --ortomax-sidebar-width: 210px;
+    }
+
+    .ortomax-content {
+        padding:
+            18px;
+    }
+
+    .ortomax-header {
+        padding:
+            0 18px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    :root {
+        --ortomax-sidebar-width: 0px;
+    }
+
+    .ortomax-sidebar {
+
+        position:
+            fixed;
+
+        width:
+            240px;
+
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+    .ortomax-sidebar.open {
+
+        transform:
+            translateX(0);
+    }
+
+    .ortomax-main {
+
+        margin-left:
+            0;
+
+        width:
+            100%;
+    }
+
+    .ortomax-header-title {
+
+        font-size:
+            16px;
+    }
+
+    .ortomax-card {
+
+        padding:
+            18px;
+    }
+
+    .ortomax-module-header {
+
+        align-items:
+            flex-start;
+    }
+}
+
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-muted {
+    color: var(--ortomax-gray-dark);
+}
+
+.mt-1 {
+    margin-top: 5px;
+}
+
+.mt-2 {
+    margin-top: 10px;
+}
+
+.mt-3 {
+    margin-top: 20px;
+}
+
+.mb-1 {
+    margin-bottom: 5px;
+}
+
+.mb-2 {
+    margin-bottom: 10px;
+}
+
+.mb-3 {
+    margin-bottom: 20px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-1 {
+    gap: 8px;
+}
+
+.gap-2 {
+    gap: 15px;
+}
+
+/* modal 
+
+/* =========================================================
+   MODALES ORTOMAX
+   ========================================================= */
+
+   .ortomax-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.ortomax-modal.active {
+    display: flex;
+}
+
+.ortomax-modal-content {
+    width: 100%;
+    max-width: 600px;
+
+    background: var(--ortomax-white);
+
+    border-radius: 10px;
+
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.20);
+
+    overflow: hidden;
+
+    animation: ortomax-modal-show 0.20s ease-out;
+}
+
+@keyframes ortomax-modal-show {
+
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.ortomax-modal-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    background: var(--ortomax-blue);
+
+    color: white;
+}
+
+.ortomax-modal-title {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.ortomax-modal-close {
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    line-height: 1;
+}
+
+.ortomax-modal-close:hover {
+    opacity: 0.8;
+}
+
+.ortomax-modal-body {
+    padding: 24px;
+}
+
+.ortomax-modal-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 16px 24px;
+
+    border-top: 1px solid var(--ortomax-border);
+
+    background: var(--ortomax-gray-light);
+}
+
+
+/* Evita desplazamiento del fondo cuando el modal está abierto */
+
+body.ortomax-modal-open {
+    overflow: hidden;
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .ortomax-modal {
+        padding: 10px;
+    }
+
+    .ortomax-modal-content {
+        max-width: 100%;
+    }
+
+    .ortomax-modal-body {
+        padding: 18px;
+    }
+
+}
+
+/* =========================================================
+   ACCIONES DE TABLAS
+   ========================================================= */
+
+   .ortomax-actions-cell {
+    width: 220px;
+    min-width: 220px;
+    white-space: nowrap;
+}
+
+.ortomax-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: nowrap;
+}
+
+.ortomax-actions .ortomax-btn {
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 8px 11px;
+    font-size: 12px;
+}
+
