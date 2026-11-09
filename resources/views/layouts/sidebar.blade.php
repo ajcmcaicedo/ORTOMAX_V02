@@ -340,11 +340,26 @@
             <span>PENDIENTE</span>
         </a>
 
-        <a href="#" class="ortomax-menu-pendiente" onclick="return false;">
-            <span aria-hidden="true">📄</span>
-            <span>Notas de Entrega</span>
-            <span>PENDIENTE</span>
-        </a>
+        @can('viewAny', App\Models\NotaEntrega::class)
+            <a href="{{ route('notas_entrega.index') }}">
+                <span aria-hidden="true">📄</span>
+                <span>Notas de Entrega</span>
+            </a>
+        @endcan
+
+        @can('viewAny', App\Models\TipoCirugia::class)
+            <a href="{{ route('tipos_cirugia.index') }}">
+                <span aria-hidden="true">🩻</span>
+                <span>Tipos de cirugía</span>
+            </a>
+        @endcan
+
+        @can('viewAny', App\Models\Medico::class)
+            <a href="{{ route('medicos.index') }}">
+                <span aria-hidden="true">🩺</span>
+                <span>Médicos</span>
+            </a>
+        @endcan
 
         <a href="#" class="ortomax-menu-pendiente" onclick="return false;">
             <span aria-hidden="true">♻️</span>

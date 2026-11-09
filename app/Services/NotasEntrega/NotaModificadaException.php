@@ -2,12 +2,12 @@
 
 namespace App\Services\NotasEntrega;
 
-use RuntimeException;
+use App\Exceptions\ReglaNegocioException;
 
 /**
  * Otro usuario modificó la nota desde que se cargó la pantalla
  * (bloqueo optimista por la columna version).
  */
-class NotaModificadaException extends RuntimeException
+class NotaModificadaException extends ReglaNegocioException
 {
 }

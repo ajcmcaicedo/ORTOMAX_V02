@@ -16,6 +16,10 @@ use App\Http\Controllers\ProductoMaestroController;
 use App\Http\Controllers\ProductoProveedorController;
 use App\Http\Controllers\SincronizacionController;
 use App\Http\Controllers\LoteController;
+use App\Http\Controllers\MedicoController;
+use App\Http\Controllers\NotaEntregaController;
+use App\Http\Controllers\NotaEntregaEquipoController;
+use App\Http\Controllers\TipoCirugiaController;
 
 
 /*
@@ -463,3 +467,46 @@ Route::post('/sincronizaciones/bodegas/ejecutar', [SincronizacionController::cla
 Route::get('/sincronizaciones/bodegas/estado', [SincronizacionController::class, 'estadoBodegas'])
     ->middleware(['auth', 'permiso:productos.ver'])
     ->name('sincronizaciones.bodegas.estado');
+
+/*
+|--------------------------------------------------------------------------
+| Notas de Entrega (flujo operativo)
+|--------------------------------------------------------------------------
+|
+| La autorización fina (rol + estado + asignación) se hace con Policies
+| dentro de cada acción; aquí solo se exige sesión.
+*/
+
+Route::middleware('auth')->group(function () {
+
+    Route::prefix('notas-entrega')->name('notas_entrega.')->group(function () {
+        Route::get('/', [NotaEntregaController::class, 'index'])->name('index');
+        Route::get('/crear', [NotaEntregaController::class, 'create'])->name('create');
+        Route::post('/', [NotaEntregaController::class, 'store'])->name('store');
+        Route::get('/{nota}', [NotaEntregaController::class, 'show'])->name('show');
+        Route::put('/{nota}', [NotaEntregaController::class, 'update'])->name('update');
+        Route::put('/{nota}/paciente', [NotaEntregaController::class, 'actualizarPaciente'])->name('paciente');
+        Route::post('/{nota}/iniciar-alistamiento', [NotaEntregaController::class, 'iniciarAlistamiento'])->name('iniciar_alistamiento');
+        Route::post('/{nota}/anular', [NotaEntregaController::class, 'anular'])->name('anular');
+
+        Route::get('/{nota}/equipos/buscar', [NotaEntregaEquipoController::class, 'buscar'])->name('equipos.buscar');
+        Route::get('/{nota}/sugerencias', [NotaEntregaEquipoController::class, 'sugerencias'])->name('sugerencias');
+        Route::post('/{nota}/sugerencias', [NotaEntregaEquipoController::class, 'aceptarSugerencias'])->name('sugerencias.aceptar');
+        Route::post('/{nota}/equipos', [NotaEntregaEquipoController::class, 'store'])->name('equipos.store');
+        Route::delete('/{nota}/equipos/{linea}', [NotaEntregaEquipoController::class, 'destroy'])->name('equipos.destroy');
+    });
+
+    Route::prefix('configuracion/tipos-cirugia')->name('tipos_cirugia.')->group(function () {
+        Route::get('/', [TipoCirugiaController::class, 'index'])->name('index');
+        Route::post('/', [TipoCirugiaController::class, 'store'])->name('store');
+        Route::get('/{tipo}', [TipoCirugiaController::class, 'edit'])->name('edit');
+        Route::put('/{tipo}', [TipoCirugiaController::class, 'update'])->name('update');
+        Route::post('/{tipo}/equipos', [TipoCirugiaController::class, 'agregarEquipo'])->name('equipos.store');
+        Route::put('/{tipo}/equipos/{linea}', [TipoCirugiaController::class, 'actualizarEquipo'])->name('equipos.update');
+        Route::delete('/{tipo}/equipos/{linea}', [TipoCirugiaController::class, 'quitarEquipo'])->name('equipos.destroy');
+    });
+
+    Route::get('/medicos', [MedicoController::class, 'index'])->name('medicos.index');
+    Route::post('/medicos', [MedicoController::class, 'store'])->name('medicos.store');
+    Route::put('/medicos/{medico}', [MedicoController::class, 'update'])->name('medicos.update');
+});

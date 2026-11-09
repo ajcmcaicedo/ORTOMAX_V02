@@ -16,5 +16,17 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        /*
+         * Reglas de negocio: mensaje claro al usuario (no error 500).
+         */
+        $exceptions->render(function (\App\Exceptions\ReglaNegocioException $e, \Illuminate\Http\Request $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'detalles' => $e->detalles,
+                ], 422);
+            }
+
+            return back()->withInput()->withErrors(['negocio' => $e->getMessage()]);
+        });
     })->create();

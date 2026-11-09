@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class NotaEntrega extends Model
 {
@@ -17,11 +18,15 @@ class NotaEntrega extends Model
         'institucion_id',
         'regional_id',
         'bodega_origen_id',
+        'tipo_cirugia_id',
+        'medico_id',
         'solicitado_por_id',
         'creado_por_id',
         'preparador_id',
         'instrumentador_id',
         'fecha_emision',
+        'fecha_cirugia_programada',
+        'fecha_cirugia_efectiva',
         'fecha_despacho',
         'fecha_entrega',
         'fecha_cierre',
@@ -33,6 +38,8 @@ class NotaEntrega extends Model
     protected $casts = [
         'estado' => EstadoNotaEntrega::class,
         'fecha_emision' => 'datetime',
+        'fecha_cirugia_programada' => 'datetime',
+        'fecha_cirugia_efectiva' => 'datetime',
         'fecha_despacho' => 'datetime',
         'fecha_entrega' => 'datetime',
         'fecha_cierre' => 'datetime',
@@ -58,6 +65,34 @@ class NotaEntrega extends Model
     public function bodegaOrigen(): BelongsTo
     {
         return $this->belongsTo(Bodega::class, 'bodega_origen_id');
+    }
+
+    public function tipoCirugia(): BelongsTo
+    {
+        return $this->belongsTo(TipoCirugia::class, 'tipo_cirugia_id');
+    }
+
+    public function medico(): BelongsTo
+    {
+        return $this->belongsTo(Medico::class, 'medico_id');
+    }
+
+    /**
+     * Datos sensibles. Para mostrarlos usar ServicioBorradorNota::verPaciente().
+     */
+    public function paciente(): HasOne
+    {
+        return $this->hasOne(NotaEntregaPaciente::class, 'nota_entrega_id');
+    }
+
+    /**
+     * Líneas cabecera de equipo (tipo_linea = EQUIPO).
+     */
+    public function lineasEquipo(): HasMany
+    {
+        return $this->hasMany(NotaEntregaDetalle::class, 'nota_entrega_id')
+            ->where('tipo_linea', 'EQUIPO')
+            ->orderBy('id');
     }
 
     public function instrumentador(): BelongsTo

@@ -9,9 +9,11 @@ use App\Models\EquipoInventario;
 use App\Models\Institucion;
 use App\Models\Lote;
 use App\Models\NotaEntrega;
+use App\Models\NotaEntregaDetalle;
 use App\Models\Producto;
 use App\Models\Role;
 use App\Models\StockLote;
+use App\Models\TipoCirugia;
 use App\Models\Ubicacion;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -81,13 +83,53 @@ trait DatosOperativos
         ])->refresh();
     }
 
-    protected function equipo(string $referencia = 'ARIX-RADIO-DISTAL', ?Bodega $bodega = null): Equipo
+    protected function equipo(string $referencia = 'ARIX-RADIO-DISTAL', ?Bodega $bodega = null, ?string $codigo = null, string $estado = 'ACTIVO'): Equipo
     {
         return Equipo::create([
-            'codigo' => 'P' . Str::upper(Str::random(8)),
+            'codigo' => $codigo ?? 'P' . Str::upper(Str::random(8)),
             'codigo_referencia' => $referencia,
             'nombre' => 'EQUIPO ' . $referencia,
             'bodega_id' => $bodega?->id,
+            'regional_id' => $bodega?->regional_id,
+            'estado' => $estado,
+        ])->refresh();
+    }
+
+    /**
+     * Tipo de cirugía con plantilla: [referencia => obligatorio].
+     */
+    protected function tipoCirugia(array $plantilla, string $nombre = 'Radio distal'): TipoCirugia
+    {
+        $tipo = TipoCirugia::create([
+            'codigo' => 'TC' . Str::upper(Str::random(6)),
+            'nombre' => $nombre,
+        ]);
+
+        $orden = 1;
+        foreach ($plantilla as $referencia => $obligatorio) {
+            $tipo->plantilla()->create([
+                'codigo_referencia' => $referencia,
+                'obligatorio' => $obligatorio,
+                'orden' => $orden++,
+            ]);
+        }
+
+        return $tipo->refresh();
+    }
+
+    /**
+     * Agrega una línea EQUIPO directamente (sin reglas), para preparar escenarios.
+     */
+    protected function ponerEquipoEnNota(NotaEntrega $nota, Equipo $equipo): NotaEntregaDetalle
+    {
+        return NotaEntregaDetalle::create([
+            'nota_entrega_id' => $nota->id,
+            'equipo_id' => $equipo->id,
+            'tipo_linea' => 'EQUIPO',
+            'codigo' => $equipo->codigo,
+            'descripcion' => $equipo->nombre,
+            'cantidad_enviada' => 1,
+            'estado' => 'PENDIENTE',
         ]);
     }
 
@@ -103,12 +145,12 @@ trait DatosOperativos
         ])->refresh();
     }
 
-    protected function institucion(): Institucion
+    protected function institucion(string $nombre = 'Hospital de prueba'): Institucion
     {
         return Institucion::create([
             'codigo' => 'I' . Str::upper(Str::random(8)),
             'tipo' => 'HOSPITAL',
-            'razon_social' => 'Hospital de prueba',
+            'razon_social' => $nombre,
         ]);
     }
 

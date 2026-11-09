@@ -3,6 +3,7 @@
 namespace App\Services\Inventario;
 
 use App\Enums\TipoMovimiento;
+use App\Exceptions\ReglaNegocioException;
 use App\Models\Bitacora;
 use App\Models\Equipo;
 use App\Models\EquipoInventario;
@@ -12,7 +13,6 @@ use App\Models\StockLote;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
-use LogicException;
 
 /**
  * Único punto del sistema que modifica saldos de inventario
@@ -70,11 +70,11 @@ class MotorInventario
         ?string $idempotencyKey = null,
     ): MovimientoInventario {
         if (trim($motivo) === '') {
-            throw new InvalidArgumentException('La reversa requiere un motivo.');
+            throw new ReglaNegocioException('La reversa requiere un motivo.');
         }
 
         if ($original->tipo_movimiento === TipoMovimiento::REVERSA) {
-            throw new LogicException('Una reversa no se puede reversar.');
+            throw new ReglaNegocioException('Una reversa no se puede reversar.');
         }
 
         $existente = MovimientoInventario::where('movimiento_reversado_id', $original->id)->first();

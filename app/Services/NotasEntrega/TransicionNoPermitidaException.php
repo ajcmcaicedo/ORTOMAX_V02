@@ -2,8 +2,8 @@
 
 namespace App\Services\NotasEntrega;
 
-use RuntimeException;
+use App\Exceptions\ReglaNegocioException;
 
-class TransicionNoPermitidaException extends RuntimeException
+class TransicionNoPermitidaException extends ReglaNegocioException
 {
 }

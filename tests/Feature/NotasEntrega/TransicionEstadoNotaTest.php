@@ -7,7 +7,7 @@ use App\Services\NotasEntrega\NotaModificadaException;
 use App\Services\NotasEntrega\TransicionEstadoNota;
 use App\Services\NotasEntrega\TransicionNoPermitidaException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use InvalidArgumentException;
+use App\Exceptions\ReglaNegocioException;
 use RuntimeException;
 use Tests\Support\DatosOperativos;
 use Tests\TestCase;
@@ -102,7 +102,7 @@ class TransicionEstadoNotaTest extends TestCase
 
     public function test_anular_exige_motivo(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ReglaNegocioException::class);
 
         $this->servicio->ejecutar($this->nota(), E::ANULADA, $this->usuarioConRol('GERENTE'), motivo: '  ');
     }

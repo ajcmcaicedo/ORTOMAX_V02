@@ -70,4 +70,16 @@ class Equipo extends Model
             'bodega_id'
         );
     }
+
+    /**
+     * Estados de equipos.estado que permiten usarlo en una nota.
+     * Cualquier otro (EN_MANTENIMIENTO, INACTIVO, BAJA, ...) lo excluye.
+     */
+    public const ESTADOS_OPERATIVOS = ['ACTIVO', 'DISPONIBLE'];
+
+    public function estaOperativo(): bool
+    {
+        return $this->activo
+            && in_array(strtoupper((string) $this->estado), self::ESTADOS_OPERATIVOS, true);
+    }
 }

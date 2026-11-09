@@ -31,6 +31,7 @@ class NotaEntregaPolicyTest extends TestCase
             'preparador no anula despachada' => ['PREPARADOR', 'anular', E::DESPACHADA, false, false],
             'preparador anula borrador' => ['PREPARADOR', 'anular', E::BORRADOR, false, true],
             'preparador no registra consumo' => ['PREPARADOR', 'registrarConsumo', E::ENTREGADA, true, false],
+            'preparador ve notas sin asignar' => ['PREPARADOR', 'view', E::BORRADOR, false, true],
             'instrumentador ve nota asignada' => ['INSTRUMENTADOR', 'view', E::ENTREGADA, true, true],
             'instrumentador no ve nota ajena' => ['INSTRUMENTADOR', 'view', E::ENTREGADA, false, false],
             'instrumentador registra consumo asignado' => ['INSTRUMENTADOR', 'registrarConsumo', E::ENTREGADA, true, true],

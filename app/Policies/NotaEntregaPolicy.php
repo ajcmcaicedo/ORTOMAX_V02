@@ -36,7 +36,53 @@ class NotaEntregaPolicy
     }
 
     /**
-     * Editar cabecera y contenido (equipos, ítems, lotes, cantidades).
+     * Editar la cabecera (institución, cirugía, médico, fechas, responsables).
+     * El gerente (crea solicitudes) y el preparador pueden hacerlo.
+     */
+    public function update(User $user, NotaEntrega $nota): Response
+    {
+        if (!$user->tienePermiso('notas.crear') && !$user->tienePermiso('notas.alistar')) {
+            return Response::deny('No tiene permiso para editar notas.');
+        }
+
+        return $nota->estado->permiteEditarContenido()
+            ? Response::allow()
+            : Response::deny('La nota está ' . $nota->estado->etiqueta() . ' y ya no se edita.');
+    }
+
+    /**
+     * Registrar o corregir datos del paciente (puede confirmarse después).
+     */
+    public function editarPaciente(User $user, NotaEntrega $nota): Response
+    {
+        if (!$user->tienePermiso('pacientes.ver')) {
+            return Response::deny('No tiene permiso sobre datos de pacientes.');
+        }
+
+        if ($nota->estado->esFinal()) {
+            return Response::deny('La nota está ' . $nota->estado->etiqueta() . '.');
+        }
+
+        return $user->tienePermiso('notas.crear')
+            || $user->tienePermiso('notas.alistar')
+            || $nota->instrumentador_id === $user->id
+            ? Response::allow()
+            : Response::deny('No puede editar el paciente de esta nota.');
+    }
+
+    public function iniciarAlistamiento(User $user, NotaEntrega $nota): Response
+    {
+        if (!$user->tienePermiso('notas.alistar')) {
+            return Response::deny('No tiene permiso para alistar notas.');
+        }
+
+        return $nota->estado === EstadoNotaEntrega::BORRADOR
+            ? Response::allow()
+            : Response::deny('Solo se inicia el alistamiento de un borrador.');
+    }
+
+    /**
+     * Editar contenido (equipos, ítems, lotes, cantidades).
      */
     public function alistar(User $user, NotaEntrega $nota): Response
     {

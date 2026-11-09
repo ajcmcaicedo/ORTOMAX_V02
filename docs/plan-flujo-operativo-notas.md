@@ -252,7 +252,7 @@ Pruebas de Feature y Unit previstas:
 
 1. **D1**: los implantes viven dentro de cada equipo (`equipo_inventario`); las reposiciones salen de la bodega principal u otra bodega (`stock_lotes`).
 2. **D2**: `codigo_referencia` agrupa las copias N.1, N.2… de un mismo equipo.
-3. Precios: todavía no hay tabla → se crea `precios_institucion` en la Fase 3 (pendiente: ¿existe alquiler de motores pactado por institución?).
+3. Precios: todavía no hay tabla → se crea `precios_institucion` en la Fase 3, con concepto `VENTA` y `ALQUILER` (confirmado: existe alquiler de motores pactado por institución).
 4. Pruebas sobre MySQL y corrección de las 2 migraciones rotas: **autorizado**.
 5. Estados unificados: **aprobados**.
 
@@ -261,8 +261,9 @@ Pruebas de Feature y Unit previstas:
 | Fase | Estado |
 |---|---|
 | 0. Análisis y plan | ✅ |
-| 1. Fundamentos | ✅ (pendiente de aprobación) |
-| 2–6 | Pendientes |
+| 1. Fundamentos | ✅ |
+| 2. Borrador y sugerencias | ✅ (pendiente de aprobación) |
+| 3–6 | Pendientes |
 
 ### Cómo correr las pruebas
 
@@ -280,3 +281,12 @@ php artisan test
 
 La prueba de triggers de la bitácora se omite cuando el usuario de BD no tiene privilegio para crear triggers
 (MySQL con binlog activo y sin SUPER); la inmutabilidad a nivel de modelo se prueba siempre.
+
+### Fase 2 – notas de implementación
+
+- Numeración: `NE` + año (2) + consecutivo (8) = 12 caracteres (`notas_entrega.numero`), sin huecos (tabla `secuencias_documentos`).
+- Un equipo puede estar en varios BORRADORES (solo advertencia); al **iniciar alistamiento** se bloquean los equipos y gana la primera nota.
+- Equipos con `estado` distinto de ACTIVO/DISPONIBLE (p. ej. EN_MANTENIMIENTO) no se pueden agregar ni sugerir.
+- El PREPARADOR recibió además `notas.ver_todas` y `pacientes.ver` (recibe pedidos sin asignar y registra al paciente).
+- Paciente: columnas cifradas + HMAC de la identificación; la bitácora guarda solo los nombres de los campos cambiados.
+- Anular desde la pantalla solo aplica a notas no despachadas hasta que exista la reversa de inventario (Fase 6).

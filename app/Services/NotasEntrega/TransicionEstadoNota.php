@@ -8,7 +8,7 @@ use App\Models\NotaEntrega;
 use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\DB;
-use InvalidArgumentException;
+use App\Exceptions\ReglaNegocioException;
 
 /**
  * Único punto para cambiar el estado de una Nota de Entrega.
@@ -38,7 +38,7 @@ class TransicionEstadoNota
         ?Closure $efectos = null,
     ): NotaEntrega {
         if ($destino === EstadoNotaEntrega::ANULADA && trim((string) $motivo) === '') {
-            throw new InvalidArgumentException('La anulación requiere un motivo.');
+            throw new ReglaNegocioException('La anulación requiere un motivo.');
         }
 
         return DB::transaction(function () use ($nota, $destino, $usuario, $motivo, $versionEsperada, $efectos) {

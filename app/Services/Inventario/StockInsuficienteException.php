@@ -2,8 +2,8 @@
 
 namespace App\Services\Inventario;
 
-use RuntimeException;
+use App\Exceptions\ReglaNegocioException;
 
-class StockInsuficienteException extends RuntimeException
+class StockInsuficienteException extends ReglaNegocioException
 {
 }
