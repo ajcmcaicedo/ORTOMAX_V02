@@ -245,3 +245,38 @@ Pruebas de Feature y Unit previstas:
 3. ¿De dónde salen hoy los precios por institución (Contífico, un Excel como `ortomax_precios`, u otro)? ¿Hay alquiler de motores pactado por institución?
 4. ¿Autorizas correr las pruebas sobre MySQL y hacer idempotentes las 2 migraciones rotas?
 5. ¿Apruebas los estados unificados de la sección 1.1?
+
+---
+
+## 9. Decisiones confirmadas (respuesta a la Fase 0)
+
+1. **D1**: los implantes viven dentro de cada equipo (`equipo_inventario`); las reposiciones salen de la bodega principal u otra bodega (`stock_lotes`).
+2. **D2**: `codigo_referencia` agrupa las copias N.1, N.2… de un mismo equipo.
+3. Precios: todavía no hay tabla → se crea `precios_institucion` en la Fase 3 (pendiente: ¿existe alquiler de motores pactado por institución?).
+4. Pruebas sobre MySQL y corrección de las 2 migraciones rotas: **autorizado**.
+5. Estados unificados: **aprobados**.
+
+## 10. Estado de fases
+
+| Fase | Estado |
+|---|---|
+| 0. Análisis y plan | ✅ |
+| 1. Fundamentos | ✅ (pendiente de aprobación) |
+| 2–6 | Pendientes |
+
+### Cómo correr las pruebas
+
+Requieren MySQL 8 (ver `phpunit.xml`; todos los valores se pueden sobrescribir con variables de entorno):
+
+```sql
+CREATE DATABASE ortomax_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'ortomax'@'127.0.0.1' IDENTIFIED BY 'secret';
+GRANT ALL ON ortomax_test.* TO 'ortomax'@'127.0.0.1';
+```
+
+```bash
+php artisan test
+```
+
+La prueba de triggers de la bitácora se omite cuando el usuario de BD no tiene privilegio para crear triggers
+(MySQL con binlog activo y sin SUPER); la inmutabilidad a nivel de modelo se prueba siempre.

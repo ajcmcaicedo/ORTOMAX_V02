@@ -6,21 +6,34 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /*
+     * Idempotente: la migración create_movimientos_inventario_table
+     * ya crea estas FK con constrained(). En una base nueva (migrate:fresh)
+     * se omiten; en bases donde no existan se crean como antes.
+     */
     public function up(): void
     {
-        Schema::table('movimientos_inventario', function (Blueprint $table) {
+        $existentes = collect(Schema::getForeignKeys('movimientos_inventario'))
+            ->flatMap(fn ($fk) => $fk['columns'])
+            ->all();
 
-            $table->foreign('nota_entrega_id')
-                ->references('id')
-                ->on('notas_entrega')
-                ->nullOnDelete()
-                ->cascadeOnUpdate();
+        Schema::table('movimientos_inventario', function (Blueprint $table) use ($existentes) {
 
-            $table->foreign('usuario_id')
-                ->references('id')
-                ->on('users')
-                ->nullOnDelete()
-                ->cascadeOnUpdate();
+            if (!in_array('nota_entrega_id', $existentes, true)) {
+                $table->foreign('nota_entrega_id')
+                    ->references('id')
+                    ->on('notas_entrega')
+                    ->nullOnDelete()
+                    ->cascadeOnUpdate();
+            }
+
+            if (!in_array('usuario_id', $existentes, true)) {
+                $table->foreign('usuario_id')
+                    ->references('id')
+                    ->on('users')
+                    ->nullOnDelete()
+                    ->cascadeOnUpdate();
+            }
         });
     }
 

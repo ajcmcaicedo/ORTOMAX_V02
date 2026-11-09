@@ -48,18 +48,35 @@ class User extends Authenticatable
     /**
  * Verifica si el usuario tiene un permiso.
  */
+/**
+ * Permisos del usuario, cargados una sola vez por instancia
+ * (las Policies consultan varios permisos por request).
+ */
+private ?array $permisosCargados = null;
+
 public function tienePermiso(string $permiso): bool
 {
-    return $this->roles()
-        ->whereHas('permissions', function ($query) use ($permiso) {
-            $query->where('nombre', $permiso);
-        })
-        ->exists();
+    if ($this->permisosCargados === null) {
+        $this->permisosCargados = Permission::query()
+            ->whereHas('roles.users', function ($query) {
+                $query->where('users.id', $this->getKey());
+            })
+            ->pluck('nombre')
+            ->flip()
+            ->all();
+    }
+
+    return isset($this->permisosCargados[$permiso]);
 }
 
 /**
- * Verifica si el usuario tiene un rol.
+ * Descarta la caché de permisos (tras asignar o quitar roles).
  */
+public function olvidarPermisos(): void
+{
+    $this->permisosCargados = null;
+}
+
 public function tieneRol(string $rol): bool
 {
     return $this->roles()
